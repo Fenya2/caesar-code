@@ -1,6 +1,9 @@
+import * as fs from 'fs';
+import {convert} from "./tools.mjs";
+
 let offset;
 let text;
-let letters = Object.keys(JSON.parse(require("fs").readFileSync("CanonFreq.json").toString()));
+//let letters = Object.keys(JSON.parse(require("fs").readFileSync("CanonFreq.json").toString()));
 
 try
 {
@@ -9,7 +12,7 @@ try
     offset = Number(process.argv[2]);
     if(!Number.isInteger(offset) || offset < 0)
         throw new TypeError("offset must be not negative integer.")
-    text = require("fs").readFileSync(process.argv[3].toString()).toString();
+    text = fs.readFileSync(process.argv[3].toString()).toString();
 } catch (e)
 {
     console.error(e.message);
@@ -19,21 +22,6 @@ try
 
 console.log(convert(offset, text));
 process.exit(0);
-
-export function convert(offset, text)
-{
-    let output = "";
-    for(let i = 0; i < text.length; i++)
-    {
-        if(letters.indexOf(text[i].toLowerCase()) === -1)
-            output+=text[i];
-        else
-            output+= text[i].toUpperCase() === text[i] ?
-                letters[(letters.indexOf(text[i].toLowerCase())+offset)%33].toUpperCase() :
-                letters[(letters.indexOf(text[i])+offset)%33];
-    }
-    return output;
-}
 
 function showHelp()
 {

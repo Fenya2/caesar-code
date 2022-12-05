@@ -1,11 +1,14 @@
-let text;
-let perfectFreqTable = JSON.parse(require("fs").readFileSync("CanonFreq.json").toString());
+import * as fs from 'fs';
+import {convert} from "./tools.mjs";
 
+let text;
+let deltaSet = [];
+let perfectFreqTable = JSON.parse(fs.readFileSync("CanonFreq.json").toString());
 try
 {
     if(process.argv[2].toString() === "--help")
         showHelp();
-    text = require("fs").readFileSync(process.argv[2].toString()).toString();
+    text = fs.readFileSync(process.argv[2].toString()).toString();
 } catch (e)
 {
     console.error(e.message);
@@ -13,7 +16,14 @@ try
     process.exit(1);
 }
 
-countApproximation(text);
+for(let i = 0; i < Object.keys(perfectFreqTable).length; i++)
+    deltaSet.push(countApproximation(convert(i, text.toLowerCase())));
+let minDelta = 10;
+for(let i = 0; i < deltaSet.length; i++)
+    minDelta = Math.min(minDelta, deltaSet[i]);
+let offset = deltaSet.indexOf(minDelta);
+console.log(convert(offset, text));
+process.exit(0);
 
 function showHelp()
 {
