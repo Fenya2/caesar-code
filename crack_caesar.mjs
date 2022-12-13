@@ -49,11 +49,8 @@ function countApproximation(text)
             realFreqTable[text[i]]++;
         letter_quantity++;
     }
-
     for(let i in realFreqTable)
         realFreqTable[i]/=letter_quantity;
-
-
     for(let i in realFreqTable)
         delta+=(realFreqTable[i]-perfectFreqTable[i][1])**2;
     return delta;

@@ -9,7 +9,7 @@ export function convert(offset, text)
         if(letters.indexOf(text[i].toLowerCase()) === -1)
             output+=text[i];
         else
-            output+= text[i].toUpperCase() === text[i] ?
+            output+=text[i].toUpperCase() === text[i] ?
                 letters[(letters.indexOf(text[i].toLowerCase())+offset)%33].toUpperCase() :
                 letters[(letters.indexOf(text[i])+offset)%33];
     }

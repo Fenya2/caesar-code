@@ -3,7 +3,6 @@ import {convert} from "./tools.mjs";
 
 let offset;
 let text;
-//let letters = Object.keys(JSON.parse(require("fs").readFileSync("CanonFreq.json").toString()));
 
 try
 {
